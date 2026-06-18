@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Build output and caches
+dist/
+.parcel-cache/
+.cache/
+coverage/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Uploaded/runtime files
+server/images/*
+!server/images/.gitkeep
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local planning notes
+REPO_CLEANUP_PLAN.md
+FRONTEND_API_TEST_PLAN.md

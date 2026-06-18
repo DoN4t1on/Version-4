@@ -1,0 +1,71 @@
+{
+  "name": "localdonation-web",
+  "version": "1.0.0",
+  "description": "LocalDonation web application",
+  "private": true,
+  "engines": {
+    "node": ">=24 <25",
+    "npm": ">=11"
+  },
+  "source": "src/index.html",
+  "targets": {
+    "default": {
+      "context": "browser",
+      "includeNodeModules": true,
+      "publicUrl": "/"
+    }
+  },
+  "scripts": {
+    "start": "parcel src/index.html",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "dev": "parcel src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "proxy": "https://app.localdonation.org/",
+  "repository": "https://github.com/DoN4t1on/Version-2.git",
+  "keywords": [
+    "react"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@mui/icons-material": "^5.18.0",
+    "@mui/material": "^5.18.0",
+    "@react-google-maps/api": "^2.20.8",
+    "axios": "^1.18.0",
+    "bootstrap": "^5.3.8",
+    "formik": "^2.4.9",
+    "jwt-decode": "^3.1.2",
+    "moment-timezone": "^0.5.48",
+    "react": "^18.3.1",
+    "react-avatar-editor": "^15.1.0",
+    "react-bootstrap": "^2.10.10",
+    "react-cookie-consent": "^10.0.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.4.1",
+    "react-ga4": "^1.4.1",
+    "react-geocode": "^0.2.3",
+    "react-query": "^3.39.3",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.30.4",
+    "react-share": "^4.4.1",
+    "react-toastify": "^8.2.0",
+    "redux": "^4.2.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
+    "use-places-autocomplete": "^4.0.1",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "buffer": "^6.0.3",
+    "gh-pages": "^6.3.0",
+    "parcel": "^2.16.4",
+    "process": "^0.11.10"
+  }
+}
