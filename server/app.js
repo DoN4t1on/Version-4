@@ -37,12 +37,14 @@ app.use((req, res, next) => {
 });
 
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
-app.use('/readfiles', express.static(path.join(__dirname, 'images'), {
+const imageStatic = express.static(path.join(__dirname, 'images'), {
   dotfiles: 'deny',
   fallthrough: false,
   index: false,
   maxAge: '1d',
-}));
+});
+app.use('/media', imageStatic);
+app.use('/readfiles', imageStatic);
 
 const controllers = controllersFactory();
 const siteRouter = siteRouterFactory(controllers);

@@ -45,7 +45,7 @@ const uploadPost = async (req, res) => {
       title: requireString(req.body.title, 'title', { max: 160 }),
       description: requireString(req.body.description, 'description', { max: 5000 }),
       pic: req.files?.[0]?.filename || '',
-      status: false,
+      status: true,
       loc: {
         type: 'Point',
         coordinates: [longitude, latitude],
