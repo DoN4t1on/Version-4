@@ -269,7 +269,7 @@
 /* ---------- Comments screen ---------- */
 
 .comment-menu {
-  margin-bottom: 170px;
+  margin-bottom: calc(72px + var(--ld-space-3));
 }
 
 .single-comment {
@@ -1144,10 +1144,6 @@
 .activity-subsettings,
 .activity-further-selectors {
   position: static;
-}
-
-.three-menus {
-  margin-bottom: calc(var(--ld-bottom-nav-height) + var(--ld-space-6));
 }
 
 /* ---------- Static / misc pages ---------- */

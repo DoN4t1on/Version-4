@@ -8,7 +8,7 @@ module.exports = {
   googleClientId: process.env.GOOGLE_CLIENT_ID || '',
   facebookAppId: process.env.FACEBOOK_APP_ID || '',
 
-  ImageEndPoint: `${apiOrigin}/readfiles/`,
+  ImageEndPoint: `${apiOrigin}/media/`,
 
   localToken: 'LocalDonation',
 };
