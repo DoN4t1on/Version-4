@@ -1,4 +1,5 @@
 import { localToken, endPoint } from '../config/config';
+import { getLocalUserdata } from './auth/localStorageData';
 
 /**
  * @function getCurrentUser
@@ -6,12 +7,13 @@ import { localToken, endPoint } from '../config/config';
  *   Fetch the current User and return a Promise that contains either the User Object or undefined
  * @return {Promise<[Object]>} The User Object | undefined
  * */
-export const getCurrentUser = () =>
-  fetchWrapper('/api/security/current-user').then((res) => {
-    if (!res || !res.user) throw new Error('User not found');
-
-    return res.user;
-  });
+export const getCurrentUser = () => {
+  const user = getLocalUserdata();
+  if (!user?._id) {
+    return Promise.reject(new Error('User not found'));
+  }
+  return Promise.resolve(user);
+};
 
 class NotFoundError extends Error {
   constructor(message = 'Not Found') {
@@ -55,7 +57,12 @@ export const fetchWrapper = (arg1, url, body, additionalOptions, headers) => {
 
   const urlWithBase = `${endPoint}/${_url}`;
 
-  let localData = JSON.parse(localStorage.getItem(localToken));
+  let localData = null;
+  try {
+    localData = JSON.parse(localStorage.getItem(localToken));
+  } catch {
+    localData = null;
+  }
 
   const options = {
     method: _method,

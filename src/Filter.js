@@ -1,10 +1,9 @@
 import * as React from 'react';
-
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
-
-import { NavbarBottom } from './NavbarBottom';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { PageShell } from './components/layout/PageShell';
 
 const PrettoSlider = styled(Slider)({
   color: '#28a745',
@@ -96,13 +95,10 @@ const marks2 = [
 ];
 
 export const Filter = () => {
-  return (
-    <div>
-      <div className='casual-header-div'>
-        <h4 className='headline'> Erweiterte Filter</h4>
-      </div>
+  const { t } = useTranslation();
 
-      <div className='casual-menu'>
+  return (
+    <PageShell title={t('pages.advancedFilter')} showBack={false}>
         <h3>
           <strong>(Setze deinen Standort)</strong>
         </h3>
@@ -174,13 +170,6 @@ export const Filter = () => {
           marks={marks2}
           step={25}
         />
-      </div>
-      <NavbarBottom
-        classstart='under-navitem-selected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+    </PageShell>
   );
 };

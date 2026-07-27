@@ -1,15 +1,19 @@
 
 import { NavbarBottom } from "./NavbarBottom";
 import { Comment } from "./Comment";
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { localStorageData } from './services/auth/localStorageData';
 import ErrorService from './services/formatError/ErrorService';
 import userServices from './services/httpService/userAuth/userServices';
 import { useMutation, useQuery } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { PageHeader } from './components/layout/PageHeader';
+import { AppPage } from './components/layout/AppPage';
 
 export const Comments = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { Id } = useParams();
 
@@ -30,7 +34,7 @@ export const Comments = () => {
 
   const redirectToLogin = () => {
     navigate('/dein-profil', { replace: true });
-    toast.error('Erstellen Sie ein Profil um fortzufahren');
+    toast.error(t('toast.loginRequired'));
   };
 
   const getComments = useQuery(
@@ -64,20 +68,8 @@ export const Comments = () => {
   };
 
   return (
-    <div>
-
-      <div className='casual-header-div '>
-        <button className='back-button-button' onClick={() => navigate(-1)}>
-          <img
-            className='back-button-icon'
-            src={require('./img/arrow-left-short.svg')}
-          />
-        </button>
-        <h4 className=' headline headline-with-back-button '>
-          {' '}
-          Kommentare
-        </h4>
-      </div>
+    <AppPage>
+      <PageHeader title={t('comments.title')} />
 
 
       <div className='comment-menu'>
@@ -92,7 +84,7 @@ export const Comments = () => {
             type='text'
             maxLength='300'
             className='comment-input'
-            placeholder='Kommentieren'
+            placeholder={t('comments.placeholder')}
             onChange={(e) => setAmount(e.target.value)}
             required
           />
@@ -104,12 +96,7 @@ export const Comments = () => {
           </button>
         </div>
       </form>
-      <NavbarBottom
-        classstart='under-navitem-selected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+      <NavbarBottom showInfo={false} />
+    </AppPage>
   );
 };

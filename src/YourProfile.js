@@ -7,6 +7,7 @@ import { localStorageData } from './services/auth/localStorageData';
 import ErrorService from './services/formatError/ErrorService';
 import userServices from './services/httpService/userAuth/userServices';
 import { useMutation } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { ImageEndPoint } from './config/config';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -14,8 +15,11 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Signin from './Signin';
 import Signup from './Signup';
+import { PageHeader } from './components/layout/PageHeader';
+import { AppPage } from './components/layout/AppPage';
 
 export const YourProfile = () => {
+  const { t } = useTranslation();
   const Input = styled('input')({
     display: 'none',
   });
@@ -46,7 +50,7 @@ export const YourProfile = () => {
 
         // storeLocalData(data.data);
 
-        toast.success('Das Profil wurde aktualisiert');
+        toast.success(t('toast.profileUpdated'));
         navigate('/');
       },
     }
@@ -88,31 +92,36 @@ export const YourProfile = () => {
   };
 
   return (
-    <div>
-      <div className='casual-header-div'>
-        <Link to='/einstellungen'>
-          {' '}
-          <img
-            className='settings-image'
-            src={require('./img/settings.svg')}
-          />{' '}
-        </Link>
-        <h4 className='headline headline-profilesettings'> Ihr Profil </h4>
-      </div>
+    <AppPage>
+      <PageHeader
+        title={t('profile.title')}
+        rightAction={
+          <Link to='/einstellungen' className='page-header__settings-link'>
+            <img
+              className='settings-image'
+              src={require('./img/settings.svg')}
+              alt=''
+            />
+          </Link>
+        }
+      />
 
       <div className='casual-menu'>
         {localStorageData('_id') ? (
           ''
         ) : (
-          <>
-            <Signin />
-
-            <br></br>
-            <Signup />
-          </>
+          <div className='profile-welcome'>
+            <span className='profile-welcome__icon'>
+              <i className='material-icons'>person</i>
+            </span>
+            <h2 className='profile-welcome__title'>{t('profile.title')}</h2>
+            <p className='profile-welcome__text'>{t('toast.loginRequired')}</p>
+            <div className='profile-welcome__actions'>
+              <Signin />
+              <Signup />
+            </div>
+          </div>
         )}
-
-        <br />
 
         {localStorageData('_id') ? (
           <ThemeProvider theme={theme}>
@@ -138,67 +147,53 @@ export const YourProfile = () => {
               <img className='margin-bottom edit-picture' src={require('./img/pencil-square.svg')} />
             </label>
 
-            <br />
+            <div className='profile-form'>
+              <TextField
+                id='outlined-start-adornment'
+                label={t('profile.nameLabel')}
+                onChange={(e) => setfname(e.target.value)}
+                value={fname}
+                sx={{ width: 'min(100%, 360px)' }}
+                color='success'
+              />
 
-            <TextField
-              id='outlined-start-adornment'
-              label='Name'
-              onChange={(e) => setfname(e.target.value)}
-              value={fname}
-              multiline
-              rows={1}
-              sx={{ minWidth: '200px', maxheight: '5' }}
-              color='success'
-            />
-
-            <br />
-            <br />
-
-            <div>
               <TextField
                 id='outlined-multiline-static'
-                label='Beschreibung'
+                label={t('profile.descriptionLabel')}
                 onChange={(e) => setdesc(e.target.value)}
                 value={desc}
                 multiline
                 rows={4}
-                sx={{ minWidth: '250px' }}
+                sx={{ width: 'min(100%, 360px)' }}
                 color='success'
               />
-              <br />
-              <br />
+
               <TextField
-                label='Webseite'
-                placeholder='https://...'
+                label={t('profile.websiteLabel')}
+                placeholder={t('profile.websitePlaceholder')}
                 size='small'
                 onChange={(e) => setlink(e.target.value)}
                 value={link}
                 id='outlined-start-adornment'
-                sx={{ m: 1, width: '18ch' }}
+                sx={{ width: 'min(100%, 360px)' }}
                 color='success'
               />
-              <br />
-              <br />
+
               <button
-                className='btn btn-success btn-lg button border-black'
+                className='btn btn-success btn-lg button'
                 type='submit'
                 id='Update'
                 onClick={() => {
                   updateUserProfile();
                 }}
               >
-                Aktualisieren
+                {t('profile.updateButton')}
               </button>
             </div>
           </ThemeProvider>
         ) : null}
       </div>
-      <NavbarBottom
-        classstart='under-navitem-unselected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-selected'
-      />
-    </div>
+      <NavbarBottom />
+    </AppPage>
   );
 };

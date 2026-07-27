@@ -45,7 +45,7 @@ const uploadPost = async (req, res) => {
       title: requireString(req.body.title, 'title', { max: 160 }),
       description: requireString(req.body.description, 'description', { max: 5000 }),
       pic: req.files?.[0]?.filename || '',
-      status: true,
+      status: false,
       loc: {
         type: 'Point',
         coordinates: [longitude, latitude],
@@ -468,7 +468,7 @@ const getAllMostPopularPost = async (req, res) => {
   try {
     let Fetch = await Post.aggregate([
       {
-        $match: {},
+        $match: { status: true },
       },
       { $sort: { upVote: -1 } },
 

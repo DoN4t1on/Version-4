@@ -1,32 +1,21 @@
-
-import { NavbarBottom } from "./NavbarBottom";
-import { Link } from "react-router-dom";
-
-
+import { useTranslation } from 'react-i18next';
+import { NavbarBottom } from './NavbarBottom';
+import { AppPage } from './components/layout/AppPage';
 
 export const Search = () => {
+  const { t } = useTranslation();
 
+  return (
+    <AppPage>
+      <div className='search-header'>
+        <div className='search-title'>
+          <input className='search-input' placeholder={t('navTop.searchPlaceholder')} />
+        </div>
+      </div>
 
+      <p className='under-work-statement'>{t('pages.workInProgress')}</p>
 
-
-
-
-	return (
-		<div >
-
-			<div className="search-header">
-
-				<div className="search-title">
-
-					<input className="search-input" placeholder="   Suche" />
-				</div>
-
-
-				
-			</div>
-			<p className="under-work-statement"> Dieser Bereich befindet sich in Arbeit </p>
-			<NavbarBottom classstart="under-navitem-unselected" classsearch="under-navitem-selected" classactivity="under-navitem-unselected" classprofile="under-navitem-unselected" />
-		</div>
-	)
-
-}
+      <NavbarBottom />
+    </AppPage>
+  );
+};

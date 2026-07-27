@@ -3,13 +3,14 @@ import ReactGA from 'react-ga4';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { Suggestion } from './Suggestion';
-import { NavbarBottom } from './NavbarBottom';
-import Header from './components/Header';
+import { PageShell } from './components/layout/PageShell';
 import ErrorService from './services/formatError/ErrorService';
 import userServices from './services/httpService/userAuth/userServices';
 
 export const SuggestionsApprove = () => {
+  const { t } = useTranslation();
   const { Id } = useParams();
   const [allPost, setAllPost] = React.useState([]);
 
@@ -37,21 +38,10 @@ export const SuggestionsApprove = () => {
   }, []);
 
   return (
-    <div>
-      <div className='casual-header-div'>
-        <h4 className='headline'>Geteilter Antrag</h4>
-      </div>
-      <div className='sharing'>
-        {allPost.map((item) => (
-          <Suggestion item={item} key={item._id} />
-        ))}
-      </div>
-      <NavbarBottom
-        classstart='under-navitem-unselected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+    <PageShell title={t('suggestions.sharedTitle')} showBack={false} contentClassName='sharing'>
+      {allPost.map((item) => (
+        <Suggestion item={item} key={item._id} />
+      ))}
+    </PageShell>
   );
 };

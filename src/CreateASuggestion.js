@@ -10,19 +10,27 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ErrorService from './services/formatError/ErrorService';
 import userServices from './services/httpService/userAuth/userServices';
 import { useFormik } from 'formik';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { PageHeader } from './components/layout/PageHeader';
+import { AppPage } from './components/layout/AppPage';
 
 import * as Yup from 'yup';
 const Input = styled('input')({
   display: 'none',
 });
 
+const DEFAULT_LAT = 50.9361189;
+const DEFAULT_LONG = 6.9564453;
+
 export const CreateASuggestion = () => {
+  const { t } = useTranslation();
   let navigate = useNavigate();
 
-  const [currentLat, setcurrentLat] = useState(store.getState().Geo.lat);
-  const [currentLong, setcurrentLong] = useState(store.getState().Geo.long);
+  const geo = store.getState().Geo;
+  const [currentLat, setcurrentLat] = useState(geo.lat || DEFAULT_LAT);
+  const [currentLong, setcurrentLong] = useState(geo.long || DEFAULT_LONG);
 
   const onChangeHandler = async (e) => {
     var reader = new FileReader();
@@ -47,9 +55,9 @@ export const CreateASuggestion = () => {
       long: currentLong,
     },
     validationSchema: Yup.object().shape({
-      title: Yup.string().required('erforderlich'),
-      description: Yup.string().required('erforderlich'),
-      pics: Yup.string().required('erforderlich'),
+      title: Yup.string().required(t('validation.required')),
+      description: Yup.string().required(t('validation.required')),
+      pics: Yup.string().required(t('validation.required')),
     }),
     onSubmit: async (values) => {
       if (localStorageData('_id')) {
@@ -65,7 +73,7 @@ export const CreateASuggestion = () => {
 
         addNewSuggestion.mutate(formData);
       } else {
-        toast.error('Erstellen Sie ein Profil um fortzufahren');
+        toast.error(t('toast.loginRequired'));
       }
     },
   });
@@ -78,7 +86,7 @@ export const CreateASuggestion = () => {
         toast.error(ErrorService.uniformError(error));
       },
       onSuccess: (res) => {
-        toast.success('Ihr Antrag wurde erfolgreich erstellt und wird überprüft');
+        toast.success(t('toast.postCreated'));
         navigate('/');
       },
     }
@@ -89,14 +97,12 @@ export const CreateASuggestion = () => {
   }, []);
 
   return (
-    <div>
-      <div className='casual-header-div'>
-        <h4 className='headline'>Erstellen Sie einen Antrag</h4>
-      </div>
+    <AppPage>
+      <PageHeader title={t('suggestions.createTitle')} />
 
       <div className='casual-menu'>
         <form onSubmit={formik.handleSubmit}>
-          <p className='create-titel create-font-size'>Titel:</p>
+          <p className='create-titel create-font-size'>{t('suggestions.titleLabel')}</p>
 
           <input
             id='title'
@@ -115,7 +121,7 @@ export const CreateASuggestion = () => {
 
           <br />
         
-          <p className='create-font-size'>Bild:</p>
+          <p className='create-font-size'>{t('suggestions.imageLabel')}</p>
 
           <label htmlFor='icon-button-file'>
             <Input
@@ -153,7 +159,7 @@ export const CreateASuggestion = () => {
             <div className='error-color'>{formik.errors.pics}</div>
           ) : null}
 
-          <p className='create-font-size'>Begründung:</p>
+          <p className='create-font-size'>{t('suggestions.reasonLabel')}</p>
 
           <div className=''>
             <textarea
@@ -181,18 +187,13 @@ export const CreateASuggestion = () => {
             <CircularProgress />
           ) : (
            <button type='submit' className='btn btn-success btn-lg button'>
-              Erstellen
+              {t('suggestions.createButton')}
             </button>
           )}
         </form>
       </div>
 
-      <NavbarBottom
-        classstart='under-navitem-unselected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+      <NavbarBottom />
+    </AppPage>
   );
 };

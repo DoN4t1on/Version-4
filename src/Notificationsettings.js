@@ -5,6 +5,9 @@ import Switch from '@mui/material/Switch';
 
 
 import { NavbarBottom } from "./NavbarBottom";
+import { useTranslation } from 'react-i18next';
+import { PageHeader } from './components/layout/PageHeader';
+import { AppPage } from './components/layout/AppPage';
 
 
 const IOSSwitch = styled((props) => (
@@ -59,14 +62,11 @@ const IOSSwitch = styled((props) => (
 }));
 
 export const Notificationsettings = () => {
-
-
+  const { t } = useTranslation();
 
   return (
-    <div>
-      <div className='casual-header-div'>
-        <h4 className='headline'>Benachrichtigungseinstellungen</h4>
-      </div>
+    <AppPage>
+      <PageHeader title={t('pages.notifications')} showBack={false} />
 
       <div className='casual-menu  '>
         <div>
@@ -252,13 +252,8 @@ export const Notificationsettings = () => {
           </div>
         </div>
       </div>
-      <NavbarBottom
-        classstart='under-navitem-unselected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-selected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+      <NavbarBottom />
+    </AppPage>
   );
 
 }

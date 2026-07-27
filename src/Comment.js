@@ -11,10 +11,12 @@ import userServices from './services/httpService/userAuth/userServices';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 import moment from 'moment-timezone';
+import { ShareSheet } from './components/ShareSheet';
 
 export const Comment = (props) => {
   const { Id } = useParams();
   const localtz = moment.tz.guess();
+  const [shareOpen, setShareOpen] = useState(false);
   const [sumcounter, setSumcounter] = useState(
     props.item.upvotecomments.length - props.item.downvotecomments.length
   );
@@ -163,84 +165,81 @@ export const Comment = (props) => {
 
   return (
     <div className='single-comment'>
-      <div className='campaign-header campaign-header-comments'>
-        <button
-          style={{ visibility: 'hidden' }}
-          className='btn btn-success button small'
+      <div className='comment-card__top'>
+        <Link
+          to={`/profil/${props.item.user[0]._id}`}
+          className='comment-card__author'
         >
-          <img className='clock' src={require('./img/clock-fill.svg')} />
-          (Zeit)
-        </button>
+          {props.item.user[0].fname}
+        </Link>
+
         <Link
           to={`/melden/`}
+          className='comment-card__menu'
           state={{
             link: `https://app.lokalspende.org/neuste-kommentare/${props.item._id}`,
           }}
         >
-          <img
-            className='report-comments'
-            src={require('./img/three-dots.svg')}
-          />
+          <img src={require('./img/three-dots.svg')} alt='' />
         </Link>
-        <div className='post-creator-div'>
-          <Link to={`/profil/${props.item.user[0]._id}`}>
-            <button className='btn btn-success button small position-right'>
-              <span className='Suggestion-creator-name'>
-                {props.item.user[0].fname}
-              </span>
-            </button>
-          </Link>
-        </div>
       </div>
 
-      <p className='comment'>{props.item.commentText} </p>
+      <p className='comment'>{props.item.commentText}</p>
 
-      <div className='interaction-bar interaction-bar-comment'>
-        <div className='voting-div-comment'>
-          <div>
-            {' '}
+      <div className='comment-card__actions'>
+        <div className='comment-card__votes'>
+          <div className='comment-card__vote'>
             <img
               onClick={upvote}
               src={upvoteimage}
               className='voting-button'
               id='upvotebutton'
+              alt='Upvote'
             />
             <Link
               className='linkblack'
               to={'/upvoter-comments/' + props.item._id}
             >
-              <p id='upvotes' className='voting-counter-upanddown '>
+              <p id='upvotes' className='voting-counter-upanddown'>
                 {upvotecounter}
               </p>
             </Link>
           </div>
 
-          <div>
-            {' '}
+          <div className='comment-card__vote'>
             <img
               onClick={downvote}
               src={downvoteimage}
               className='voting-button'
               id='downvotebutton'
+              alt='Downvote'
             />
             <Link
               className='linkblack'
               to={'/downvoter-comments/' + props.item._id}
             >
-              <p id='downvotes' className=' voting-counter-upanddown '>
+              <p id='downvotes' className='voting-counter-upanddown'>
                 {downvotecounter}
               </p>
             </Link>
           </div>
         </div>
 
-        <div className='divider-horizontal-rule-comments' />
-
-        <Link to='/teilen' state={{ url: `/neuste-kommentare/${Id || props.item.postId}` }}>
-          {' '}
-          <img src={require('./img/share.svg')} className='share-button-comment width-left' />
-        </Link>
+        <button
+          type='button'
+          className='share-trigger'
+          onClick={() => setShareOpen(true)}
+          aria-label='Share'
+        >
+          <img src={require('./img/share.svg')} className='share-button-comment' alt='' />
+        </button>
       </div>
+
+      <ShareSheet
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        url={`/neuste-kommentare/${Id || props.item.postId}`}
+      />
     </div>
   );
 };

@@ -1,114 +1,20 @@
-import { NavbarBottom } from './NavbarBottom';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { toast } from "react-toastify";
-import {
-  LinkedinShareButton,
-  RedditShareButton,
-  TelegramShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
-import {
-  FacebookIcon,
-  LinkedinIcon,
-  RedditIcon,
-  TelegramIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from "react-share";
+import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { PageShell } from './components/layout/PageShell';
+import { ShareLinks } from './components/ShareSheet';
 
-import { baseUrl } from "./config/config";
+// Fallback route for old /teilen links — sharing normally happens in the
+// in-place ShareSheet.
 export const Share = () => {
+  const { t } = useTranslation();
   const { state } = useLocation();
-  const navigate = useNavigate();
-
-  let urlToSend = state.url;
+  const urlToSend = state?.url ?? '';
 
   return (
-    <div>
-      <div className="casual-header-div ">
-        <button className="back-button-button" onClick={() => navigate(-1)}>
-          <img
-            className="back-button-icon"
-            src={require("./img/arrow-left-short.svg")}
-          />
-        </button>
-        <h4 className=" headline headline-with-back-button "> Teilen </h4>
+    <PageShell title={t('pages.share')}>
+      <div className='sharing-right'>
+        <ShareLinks url={urlToSend} />
       </div>
-      <div className="casual-menu">
-        <div className="sharing-right">
-          <a
-            onClick={() => {
-              navigator.clipboard.writeText(baseUrl + urlToSend);
-              toast.success("Link kopiert");
-            }}
-          >
-            <button className="btn btn-success share-icon-link round-borders">
-              Link kopieren <img src={require("./img/link-white.svg")} />
-            </button>
-          </a>
-          <br />
-          <a
-            href={`https://twitter.com/share?url=${baseUrl}` + urlToSend}
-            target="_blank"
-          >
-            <TwitterIcon size={50} round={true} className="share-icon" />
-          </a>
-          <br />
-          <a
-            href={`whatsapp://send?text=${baseUrl}` + urlToSend}
-            data-action="share/whatsapp/share"
-          >
-
-            <WhatsappIcon size={50} round={true} className="share-icon" />
-          </a>
-          <br />
-
-          <a
-            href={`https://t.me/share/url?url=${baseUrl}` + urlToSend}
-            data-action="share/whatsapp/share"
-          >
-
-            <TelegramIcon size={50} round={true} className="share-icon" />
-          </a>
-          <br />
-
-          <a
-            href={`https://www.linkedin.com/shareArticle?url=${baseUrl}${urlToSend}&title=Lokalspende`}
-            data-action="share/whatsapp/share"
-          >
-
-            <LinkedinIcon className="share-icon" size={50} round={true} />
-          </a>
-          <br />
-
-          <a
-            href={`https://reddit.com/submit?url=${baseUrl}${urlToSend}&title=Lokalspende`}
-            data-action="share/whatsapp/share"
-          >
-
-            <RedditIcon className="share-icon" size={50} round={true} />
-          </a>
-          <br />
-
-          <a
-            href={
-              `https://www.facebook.com/sharer/sharer.php?u=${baseUrl}` +
-              urlToSend
-            }
-          >
-
-            <FacebookIcon className="share-icon" size={50} round={true} />
-          </a>
-        </div>
-      </div>
-
-      <NavbarBottom
-        classstart="under-navitem-unselected"
-        classsearch="under-navitem-unselected"
-        classactivity="under-navitem-unselected"
-        classprofile="under-navitem-unselected"
-      />
-    </div>
+    </PageShell>
   );
 };

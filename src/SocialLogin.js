@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useCreateGoogleAccount, useCreateFacebookAccount } from './hooks';
 import { LOGIN } from './reactStore/actions/Actions';
@@ -28,11 +29,13 @@ const loadScript = (id, source) => new Promise((resolve, reject) => {
 });
 
 function SocialLogin() {
+  const { t, i18n } = useTranslation();
   const googleButton = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { mutateAsync: createGoogleAccount } = useCreateGoogleAccount();
   const { mutateAsync: createFacebookAccount } = useCreateFacebookAccount();
+  const locale = i18n.language?.startsWith('de') ? 'de' : 'en';
 
   const finishLogin = (response) => {
     if (response.status) {
@@ -58,25 +61,26 @@ function SocialLogin() {
           theme: 'outline',
           size: 'large',
           text: 'continue_with',
-          locale: 'de',
+          locale,
           width: 280,
         });
       })
-      .catch(() => toast.error('Google-Anmeldung konnte nicht geladen werden'));
+      .catch(() => toast.error(t('auth.googleLoadFailed')));
 
     return () => {
       cancelled = true;
     };
-  }, [createGoogleAccount]);
+  }, [createGoogleAccount, locale, t]);
 
   const loginWithFacebook = async () => {
     if (!facebookAppId) {
-      toast.error('Facebook-Anmeldung ist nicht konfiguriert');
+      toast.error(t('auth.facebookNotConfigured'));
       return;
     }
 
     try {
-      await loadScript('facebook-sdk', 'https://connect.facebook.net/de_DE/sdk.js');
+      const fbLocale = locale === 'de' ? 'de_DE' : 'en_US';
+      await loadScript('facebook-sdk', `https://connect.facebook.net/${fbLocale}/sdk.js`);
       window.FB.init({ appId: facebookAppId, cookie: true, xfbml: false, version: 'v24.0' });
       window.FB.login(async (result) => {
         if (!result.authResponse) return;
@@ -85,7 +89,7 @@ function SocialLogin() {
         }));
       }, { scope: 'email,public_profile' });
     } catch {
-      toast.error('Facebook-Anmeldung konnte nicht geladen werden');
+      toast.error(t('auth.facebookLoadFailed'));
     }
   };
 
@@ -94,7 +98,7 @@ function SocialLogin() {
       {googleClientId ? (
         <div ref={googleButton} />
       ) : (
-        <p className='text-muted'>Google-Anmeldung ist nicht konfiguriert.</p>
+        <p className='text-muted'>{t('auth.googleNotConfigured')}</p>
       )}
       <div className='my-3'>
         <button
@@ -104,7 +108,7 @@ function SocialLogin() {
           disabled={!facebookAppId}
         >
           <i className='fab fa-facebook mx-2' />
-          Weiter mit Facebook
+          {t('auth.continueWithFacebook')}
         </button>
       </div>
     </div>

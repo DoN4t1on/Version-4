@@ -1,5 +1,3 @@
-const { websiteLink } = process.env;
-
 async function forgetEmailBody(data) {
   return (
     `
@@ -40,6 +38,8 @@ async function welcomeEmailBody(data) {
   );
 }
 
+const publicSiteUrl = (process.env.websiteLink || 'http://localhost:1234').replace(/\/$/, '');
+
 const ThanksEmailBody = `<!DOCTYPE html>
 <html lang="en">
 
@@ -69,7 +69,7 @@ const ThanksEmailBody = `<!DOCTYPE html>
         <h1 class="display-3"></h1>
         <p class="lead"><strong>Ihre E-Mail ist jetzt bestätigt</strong> 
         <p class="lead">
-            <a class="btn-lg button btn-success" href="${websiteLink}dein-profil" role="button">Login</a>
+            <a class="btn-lg button btn-success" href="${publicSiteUrl}/dein-profil" role="button">Login</a>
         </p>
     </div>
 </body>

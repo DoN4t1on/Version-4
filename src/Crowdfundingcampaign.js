@@ -5,9 +5,11 @@ import pinimageempty from './img/pin.svg';
 import pinimagefull from './img/pin-fill.svg';
 
 import { ProgressBar } from 'react-bootstrap';
+import { ShareSheet } from './components/ShareSheet';
 
 export const Crowdfundingcampaign = (props) => {
   const [pinimage, setPinimage] = useState(pinimageempty);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const mark = () => {
     if (pinimage == pinimageempty) {
@@ -115,13 +117,20 @@ export const Crowdfundingcampaign = (props) => {
         </form>
         <br />
 
-        <Link to='/teilen'>
+        <button
+          type='button'
+          className='share-trigger share-crowdfunding-trigger'
+          onClick={() => setShareOpen(true)}
+          aria-label='Share'
+        >
           <img
             src={require('./img/share.svg')}
             className='share-crowdfunding'
             alt=''
           />
-        </Link>
+        </button>
+
+        <ShareSheet open={shareOpen} onClose={() => setShareOpen(false)} url='' />
       </div>
       <div className='divider-horizontal-rule'>
         <hr />

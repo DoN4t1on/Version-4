@@ -15,13 +15,10 @@ export const SuggestionsRejectedNewest = () => {
     <div>
       <Header />
 
-      <div className='campaigns no-data'> befinden sich noch keine abgelehnten Crowdfundingkampagnen. Wir sind bereits im Dialog mit der lokalen Regierung für eine Ratsversammlung. Gerne können Sie diese auch persönlich kontaktieren.</ div>
-      <NavbarBottom
-        classstart='under-navitem-selected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-unselected'
-      />
+      <div className='campaigns no-data'>
+        befinden sich noch keine abgelehnten Crowdfundingkampagnen. Wir sind bereits im Dialog mit der lokalen Regierung für eine Ratsversammlung. Gerne können Sie diese auch persönlich kontaktieren.
+      </div>
+      <NavbarBottom />
     </div>
   );
 

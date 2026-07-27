@@ -1,161 +1,176 @@
-import React from "react";
-import Button from "@mui/material/Button";
-
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import SocialLogin from "./SocialLogin";
-import Signup from './Signup';
-
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { LOGIN } from './reactStore/actions/Actions';
-import { EMPTYSOTRE } from './reactStore/actions/Actions';
-import { useLoginEmailAccount } from './hooks';
-
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import SocialLogin from './SocialLogin';
+import Signup from './Signup';
+import { AuthModal } from './components/layout/AuthModal';
+import { AuthField } from './components/auth/AuthField';
+import { LOGIN } from './reactStore/actions/Actions';
+import { useLoginEmailAccount } from './hooks';
+import userServices from './services/httpService/userAuth/userServices';
+import ErrorService from './services/formatError/ErrorService';
 
 function Signin() {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
-
-  const [OpenSignUp, setOpenSignUp] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const responseGoogle = (response) => {
-    alert('Login successful');
-  };
+  const [openSignUp, setOpenSignUp] = React.useState(false);
+  const [openForgotPass, setOpenForgotPass] = React.useState(false);
+  const [forgotEmail, setForgotEmail] = React.useState('');
+  const [forgotLoading, setForgotLoading] = React.useState(false);
 
   const dispatch = useDispatch();
   const { mutateAsync: loginEmailAccount, isLoading } = useLoginEmailAccount();
-
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const formik = useFormik({
-    initialValues: {
-      pass: '',
-      username: '',
-    },
+    initialValues: { pass: '', username: '' },
     validationSchema: Yup.object().shape({
       username: Yup.string()
-        .min(4, 'Länge muss mehr als 4 Zeichen betragen')
-        .required('erforderlich'),
+        .min(4, t('validation.minLength', { count: 4 }))
+        .required(t('validation.required')),
       pass: Yup.string()
-        .min(8, 'Länge muss mehr als 8 Zeichen betragen')
-        .required('erforderlich'),
+        .min(8, t('validation.minLength', { count: 8 }))
+        .required(t('validation.required')),
     }),
     onSubmit: async (values) => {
-
       const response = await loginEmailAccount(values);
-
       if (response.status) {
-        let res = response.data;
-
-        dispatch(LOGIN(res));
-
+        dispatch(LOGIN(response.data));
+        setOpen(false);
         navigate('/');
       }
-
-      // toast('');
     },
   });
 
-  function signUpMe() {
-    setOpen(false);
-    setOpenSignUp(true);
-  }
+  const requestPasswordReset = async () => {
+    if (!forgotEmail) {
+      toast.error(t('auth.enterEmail'));
+      return;
+    }
+
+    setForgotLoading(true);
+    try {
+      await userServices.applyForForgetPass({ email: forgotEmail });
+      toast.success(t('toast.emailSent'));
+      setOpenForgotPass(false);
+      setForgotEmail('');
+    } catch (error) {
+      toast.error(ErrorService.uniformError(error));
+    } finally {
+      setForgotLoading(false);
+    }
+  };
 
   return (
     <div>
       <button
-        className='btn btn-success btn-lg button'
-        type='submit'
-        id='Donate'
-        onClick={handleClickOpen}
+        className='btn btn-success btn-lg button auth-trigger'
+        type='button'
+        onClick={() => setOpen(true)}
       >
-        Einloggen
+        {t('auth.login')}
       </button>
 
-      <Dialog
+      <AuthModal
         open={open}
-        onClose={handleClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        onClose={() => setOpen(false)}
+        title={t('auth.loginTitle')}
       >
-        <DialogTitle id='alert-dialog-title'>
-          {'Login-Dienst verwenden?'}
-        </DialogTitle>
-        <DialogContent>
-          <SocialLogin />
-          <hr className='separator my-4' />
-          <form onSubmit={formik.handleSubmit} className='mt-4'>
-            <div className='relative w-full mb-3 '>
-              <input
-                id='username'
-                name='username'
-                type='username'
-                className='input-style1'
-                placeholder={'Email'}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.username}
-              />
-              {formik.touched.username && formik.errors.username ? (
-                <div className='error-color'>{formik.errors.username}</div>
-              ) : null}
-            </div>
+        <SocialLogin />
+        <div className='auth-modal__divider'>
+          <span>{t('auth.orContinueWithEmail')}</span>
+        </div>
+        <form onSubmit={formik.handleSubmit} className='auth-form'>
+          <AuthField
+            id='signin-username'
+            name='username'
+            label={t('auth.email')}
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.username && formik.errors.username}
+          />
+          <AuthField
+            id='signin-pass'
+            name='pass'
+            type='password'
+            label={t('auth.password')}
+            value={formik.values.pass}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.pass && formik.errors.pass}
+          />
+          <div className='auth-form__actions'>
+            {isLoading ? (
+              <CircularProgress size={28} />
+            ) : (
+              <button type='submit' className='btn btn-success btn-lg button auth-form__submit'>
+                {t('auth.login')}
+              </button>
+            )}
+          </div>
+          <button
+            type='button'
+            className='auth-form__link'
+            onClick={() => {
+              setOpen(false);
+              setOpenForgotPass(true);
+            }}
+          >
+            {t('auth.forgotPassword')}
+          </button>
+          <button
+            type='button'
+            className='auth-form__link'
+            onClick={() => {
+              setOpen(false);
+              setOpenSignUp(true);
+            }}
+          >
+            {t('auth.noAccount')}
+          </button>
+        </form>
+      </AuthModal>
 
-            <div className='relative w-full mb-3'>
-              <input
-                name='pass'
-                id='pass'
-                type='password'
-                className='input-style1'
-                placeholder={'Password'}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.pass}
-              />
-              {formik.touched.pass && formik.errors.pass ? (
-                <div className='error-color'>{formik.errors.pass}</div>
-              ) : null}
-            </div>
+      <Signup open={openSignUp} onClose={() => setOpenSignUp(false)} hideTrigger />
 
-            <div className='my-4'>
-              {isLoading ? (
-                <CircularProgress />
-              ) : (
-                <>
-                  <button
-                    type='submit'
-                    className='btn btn-success btn-lg button btn-sign border-black'
-                  >
-                    Einloggen
-                  </button>
-                </>
-              )}
-            </div>
-          </form>
-          <div className='largediv' />
-        </DialogContent>
-        <DialogActions>
-          <Button color='success' onClick={handleClose} autoFocus>
-            Schließen
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <AuthModal
+        open={openForgotPass}
+        onClose={() => setOpenForgotPass(false)}
+        title={t('auth.resetPassword')}
+        footer={
+          <>
+            <button
+              type='button'
+              className='btn btn-success button button--ghost'
+              onClick={() => setOpenForgotPass(false)}
+            >
+              {t('auth.close')}
+            </button>
+            <button
+              type='button'
+              className='btn btn-success button'
+              onClick={requestPasswordReset}
+              disabled={forgotLoading}
+            >
+              {forgotLoading ? t('auth.sending') : t('auth.sendLink')}
+            </button>
+          </>
+        }
+      >
+        <AuthField
+          id='forgot-email'
+          type='email'
+          label={t('auth.emailAddress')}
+          value={forgotEmail}
+          onChange={(event) => setForgotEmail(event.target.value)}
+        />
+      </AuthModal>
     </div>
   );
 }
