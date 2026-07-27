@@ -263,7 +263,6 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: calc(var(--ld-page-header-height) + var(--ld-space-4));
-  margin-bottom: calc(var(--ld-bottom-nav-height) + var(--ld-space-6));
   max-width: var(--ld-max-content);
   padding: 0 var(--ld-space-4);
   text-align: left;
@@ -391,6 +390,7 @@
 
 .app-page {
   min-height: 100vh;
+  padding-bottom: calc(var(--ld-bottom-nav-height) + var(--ld-space-6) + env(safe-area-inset-bottom, 0));
 }
 
 .app-header {

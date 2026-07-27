@@ -16,11 +16,11 @@
     }
   },
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "node init && parcel src/index.html",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "dev": "parcel src/index.html",
-    "build": "parcel build ./src/index.html"
+    "dev": "node init && parcel src/index.html",
+    "build": "node init && parcel build ./src/index.html"
   },
   "proxy": "https://app.localdonation.org/",
   "repository": "https://github.com/DoN4t1on/Version-2.git",
