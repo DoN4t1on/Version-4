@@ -1,88 +1,28 @@
-
-import { NavbarBottom } from "./NavbarBottom";
-
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { PageShell } from './components/layout/PageShell';
 
 export const Info = () => {
-
+  const { t } = useTranslation();
 
   return (
-    <div>
-      <div className='casual-header-div'>
-        <h4 className='headline'>Info</h4>
+    <PageShell title={t('nav.info')} showBack={false}>
+      <div className='settings-list'>
+        <Link to='/impressum' className='settings-list__item'>
+          <span className='settings-list__label'>
+            <i className='material-icons'>gavel</i>
+            {t('settings.imprint')}
+          </span>
+          <i className='material-icons settings-list__chevron'>chevron_right</i>
+        </Link>
+        <Link to='/datenschutz' className='settings-list__item'>
+          <span className='settings-list__label'>
+            <i className='material-icons'>privacy_tip</i>
+            {t('settings.privacy')}
+          </span>
+          <i className='material-icons settings-list__chevron'>chevron_right</i>
+        </Link>
       </div>
-      <div className='casual-menu'>
-        <Link style={{ color: 'black' }} to='/impressum'>
-          {' '}
-          <p>
-            {' '}
-            <strong>Impressum </strong>
-          </p>{' '}
-        </Link>
-     
-        <Link style={{ color: 'black' }} to='/datenschutz'>
-          <p>
-            {' '}
-            <strong>Datenschutzerklärung</strong>
-          </p>{' '}
-        </Link>
-
-       
-
-      </div>
-
-      <nav className='nav under-navbar'>
-        <Link to='/' className='nav__link under-navitem-unselected'>
-          <i
-            className='material-icons nav__icon '
-            style={{ 'font-size': '35px' }}
-          >
-            home
-          </i>
-          <span className='nav__text'>Start</span>
-        </Link>
-        <Link to='/suche' className='nav__link under-navitem-unselected'>
-          <i
-            className='material-icons nav__icon '
-            style={{ 'font-size': '35px' }}
-          >
-            search
-          </i>
-          <span className='nav__text'>Suche</span>
-        </Link>
-        <Link
-          to='/antrag-erstellen'
-          className='nav__link under-navitem-selected'
-        >
-          <i
-            className='material-icons nav__icon'
-            style={{ 'font-size': '55px' }}
-          >
-            add_circle_outline
-          </i>
-
-          <span className='nav__text'></span>
-        </Link>
-        <Link to='/aktivitat' className='nav__link under-navitem-unselected'>
-          <i
-            className='material-icons nav__icon '
-            style={{ 'font-size': '35px' }}
-          >
-            bolt
-          </i>
-          <span className='nav__text'>Aktivität</span>
-        </Link>
-        <Link to='/dein-profil' className='nav__link under-navitem-unselected'>
-          <i
-            className='material-icons nav__icon '
-            style={{ 'font-size': '35px' }}
-          >
-            person
-          </i>
-          <span className='nav__text'>Profil</span>
-        </Link>
-      </nav>
-    </div>
+    </PageShell>
   );
-
-}
+};

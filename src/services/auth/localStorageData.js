@@ -4,7 +4,12 @@ import { localToken } from '../../config/config';
 export function localStorageData(value) {
   let fialValue = null;
 
-  let localData = JSON.parse(localStorage.getItem(localToken));
+  let localData;
+  try {
+    localData = JSON.parse(localStorage.getItem(localToken));
+  } catch {
+    localData = null;
+  }
 
   if (localData) {
     Object.keys(localData).forEach(function (key) {
@@ -17,18 +22,12 @@ export function localStorageData(value) {
   return fialValue;
 }
 
-export function getLocalUserdata(value) {
-  let localData = JSON.parse(localStorage.getItem(localToken));
-
-  // if (localData && localData.hasOwnProperty('token')) {
-  //   Object.keys(localData).forEach(function (key) {
-  //     if (key == value) {
-  //       fialValue = localData[key];
-  //     }
-  //   });
-  // }
-
-  return localData;
+export function getLocalUserdata() {
+  try {
+    return JSON.parse(localStorage.getItem(localToken));
+  } catch {
+    return null;
+  }
 }
 
 export function storeLocalData(value) {
@@ -36,7 +35,12 @@ export function storeLocalData(value) {
 }
 
 export function updatelocalData(value) {
-  let localData = JSON.parse(localStorage.getItem(localToken));
+  let localData;
+  try {
+    localData = JSON.parse(localStorage.getItem(localToken));
+  } catch {
+    localData = {};
+  }
 
   localData.fname = value.fname;
 
@@ -65,7 +69,12 @@ export function updatelocalData(value) {
 }
 
 export function updateLocalstoragepic(value) {
-  let localData = JSON.parse(localStorage.getItem(localToken));
+  let localData;
+  try {
+    localData = JSON.parse(localStorage.getItem(localToken)) || {};
+  } catch {
+    localData = {};
+  }
 
   localData.pic = value;
 
@@ -73,7 +82,12 @@ export function updateLocalstoragepic(value) {
 }
 
 export function updateLocalstorageToken(value) {
-  let localData = JSON.parse(localStorage.getItem(localToken));
+  let localData;
+  try {
+    localData = JSON.parse(localStorage.getItem(localToken)) || {};
+  } catch {
+    localData = {};
+  }
 
   localData.token = value;
 

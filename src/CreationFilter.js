@@ -1,25 +1,14 @@
-
-import { NavbarBottom } from "./NavbarBottom";
-
-
+import { useTranslation } from 'react-i18next';
+import { PageShell } from './components/layout/PageShell';
 
 export const CreationFilter = () => {
+  const { t } = useTranslation();
 
-
-	return (
-
-		<div >
-			<div className="casual-header-div">
-				<h4 className="headline"> Erstellzeit-Filter </h4>
-			</div>
-			<div className="casual-menu"   >
-				<br />
-				<p className="info">Filtert Anträge und Crowdfundingkampagnen nach der Zeit wann sie erstellt wurden.</p>
-			</div>
-			<NavbarBottom classstart="under-navitem-selected" classsearch="under-navitem-unselected" classactivity="under-navitem-unselected" classprofile="under-navitem-unselected" />
-
-		</div >
-	)
-
-
-}
+  return (
+    <PageShell title={t('pages.creationFilter')} showBack={false}>
+      <p className='info'>
+        Filtert Anträge und Crowdfundingkampagnen nach der Zeit wann sie erstellt wurden.
+      </p>
+    </PageShell>
+  );
+};

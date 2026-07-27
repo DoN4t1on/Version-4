@@ -1,0 +1,145 @@
+{
+  "language": {
+    "label": "Sprache",
+    "de": "Deutsch",
+    "en": "Englisch"
+  },
+  "nav": {
+    "home": "Start",
+    "search": "Suche",
+    "activity": "Aktivität",
+    "profile": "Profil",
+    "info": "Info"
+  },
+  "navTop": {
+    "tagline": "Lokale Projekte in Köln",
+    "searchPlaceholder": "Suche",
+    "suggestions": "Anträge",
+    "crowdfunding": "Crowdfunding",
+    "active": "Aktiv",
+    "accepted": "Akzeptiert",
+    "rejected": "Abgelehnt",
+    "newest": "Neuste",
+    "mostPopular": "Beliebtest"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "regionWaitlist": "Regionen Warteliste",
+    "questions": "Fragen",
+    "contact": "Kontaktieren Sie uns",
+    "discussionGroup": "Diskussionsgruppe",
+    "code": "Code",
+    "merchandise": "Merchandise",
+    "donateToUs": "An uns spenden",
+    "logout": "Ausloggen",
+    "imprint": "Impressum",
+    "privacy": "Datenschutzerklärung"
+  },
+  "auth": {
+    "login": "Einloggen",
+    "loginTitle": "Anmelden",
+    "register": "Registrieren",
+    "registerTitle": "Konto erstellen",
+    "orContinueWithEmail": "Oder mit E-Mail fortfahren",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "close": "Schließen",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Noch kein Konto? Registrieren",
+    "resetPassword": "Passwort zurücksetzen",
+    "emailAddress": "E-Mail-Adresse",
+    "sendLink": "Link senden",
+    "sending": "Senden...",
+    "enterEmail": "Bitte geben Sie Ihre E-Mail-Adresse ein",
+    "googleNotConfigured": "Google-Anmeldung ist nicht konfiguriert.",
+    "facebookNotConfigured": "Facebook-Anmeldung ist nicht konfiguriert.",
+    "googleLoadFailed": "Google-Anmeldung konnte nicht geladen werden",
+    "facebookLoadFailed": "Facebook-Anmeldung konnte nicht geladen werden",
+    "continueWithFacebook": "Weiter mit Facebook",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "savePassword": "Passwort speichern"
+  },
+  "validation": {
+    "required": "erforderlich",
+    "minLength": "Länge muss mehr als {{count}} Zeichen betragen",
+    "passwordMismatch": "Passwörter stimmen nicht überein"
+  },
+  "toast": {
+    "loginSuccess": "Benutzer erfolgreich angemeldet",
+    "registerSuccess": "Bitte bestätigen Sie Ihre Registrierung in der Mail die wir Ihnen geschickt haben",
+    "emailSent": "Eine Email wurde gesendet",
+    "profileUpdated": "Das Profil wurde aktualisiert",
+    "postCreated": "Ihr Antrag wurde erfolgreich erstellt und wird überprüft",
+    "reportSent": "Der Beitrag wurde gemeldet",
+    "passwordChanged": "Ihr Passwort wurde geändert.",
+    "linkCopied": "Link kopiert",
+    "loginRequired": "Erstellen Sie ein Profil um fortzufahren"
+  },
+  "suggestions": {
+    "locationNotSet": "Standort ist noch nicht gesetzt. Die Anträge werden trotzdem angezeigt.",
+    "setCologneDefault": "Köln als Standard setzen",
+    "pledgeLabel": "Spendenzusagen:",
+    "pledgeButton": "Spende zusagen",
+    "createTitle": "Erstellen Sie einen Antrag",
+    "titleLabel": "Titel:",
+    "imageLabel": "Bild:",
+    "reasonLabel": "Begründung:",
+    "createButton": "Erstellen",
+    "sharedTitle": "Geteilter Antrag"
+  },
+  "profile": {
+    "title": "Ihr Profil",
+    "pageTitle": "Profil",
+    "nameLabel": "Name",
+    "descriptionLabel": "Beschreibung",
+    "websiteLabel": "Webseite",
+    "websitePlaceholder": "https://...",
+    "updateButton": "Aktualisieren"
+  },
+  "comments": {
+    "title": "Kommentare",
+    "placeholder": "Kommentieren"
+  },
+  "activity": {
+    "title": "Aktivität",
+    "notifications": "Benachrichtigungen",
+    "created": "Erstellt",
+    "marked": "Markiert",
+    "supported": "Unterstützt"
+  },
+  "report": {
+    "title": "Mehr"
+  },
+  "voters": {
+    "upvoter": "Upvoter",
+    "downvoter": "Downvoter"
+  },
+  "pages": {
+    "supporters": "Spendenzusagen",
+    "share": "Teilen",
+    "reportAction": "Melden",
+    "advancedFilter": "Erweiterte Filter",
+    "votingFilter": "Abstimmfilter",
+    "creationFilter": "Erstellzeit-Filter",
+    "location": "Ihr Standort",
+    "map": "Standort",
+    "donations": "Spenden",
+    "notifications": "Benachrichtigungseinstellungen",
+    "workInProgress": "Dieser Bereich befindet sich in Arbeit",
+    "popularComments": "Beliebteste Kommentare",
+    "more": "Mehr",
+    "linkCopied": "Link kopiert"
+  },
+  "cookie": {
+    "message": "Diese Web-App benutzt Cookies.",
+    "link": "Hier",
+    "suffix": "können Sie die Datenschutzerklärung einsehen.",
+    "accept": "Ich verstehe"
+  },
+  "share": {
+    "copyLink": "Link kopieren",
+    "systemShare": "Weitere Optionen…"
+  }
+}

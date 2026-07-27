@@ -24,7 +24,7 @@ export const SuggestionsActiveNewest = () => {
         toast.error(ErrorService.uniformError(error));
       },
       onSuccess: (res) => {
-        if (res.data.data == '') {
+        if (!res.data.data?.length) {
           setMoreRefetch(false);
           return;
         }
@@ -50,7 +50,7 @@ export const SuggestionsActiveNewest = () => {
 
   return (
     <div>
-      <NavbarTop suggestions={true} suggestions_active={true} newest={true} />
+      <NavbarTop />
       <div className='campaigns'>
         {allPost.map((item) => (
           <Suggestion item={item} key={item._id} />

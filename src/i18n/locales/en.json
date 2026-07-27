@@ -1,0 +1,145 @@
+{
+  "language": {
+    "label": "Language",
+    "de": "German",
+    "en": "English"
+  },
+  "nav": {
+    "home": "Home",
+    "search": "Search",
+    "activity": "Activity",
+    "profile": "Profile",
+    "info": "Info"
+  },
+  "navTop": {
+    "tagline": "Local projects in Cologne",
+    "searchPlaceholder": "Search",
+    "suggestions": "Suggestions",
+    "crowdfunding": "Crowdfunding",
+    "active": "Active",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "newest": "Newest",
+    "mostPopular": "Most popular"
+  },
+  "settings": {
+    "title": "Settings",
+    "regionWaitlist": "Region waitlist",
+    "questions": "Questions",
+    "contact": "Contact us",
+    "discussionGroup": "Discussion group",
+    "code": "Code",
+    "merchandise": "Merchandise",
+    "donateToUs": "Donate to us",
+    "logout": "Log out",
+    "imprint": "Imprint",
+    "privacy": "Privacy policy"
+  },
+  "auth": {
+    "login": "Sign in",
+    "loginTitle": "Sign in",
+    "register": "Register",
+    "registerTitle": "Create your account",
+    "orContinueWithEmail": "Or continue with email",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "close": "Close",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "No account yet? Register",
+    "resetPassword": "Reset password",
+    "emailAddress": "Email address",
+    "sendLink": "Send link",
+    "sending": "Sending...",
+    "enterEmail": "Please enter your email address",
+    "googleNotConfigured": "Google sign-in is not configured.",
+    "facebookNotConfigured": "Facebook sign-in is not configured.",
+    "googleLoadFailed": "Google sign-in could not be loaded",
+    "facebookLoadFailed": "Facebook sign-in could not be loaded",
+    "continueWithFacebook": "Continue with Facebook",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "savePassword": "Save password"
+  },
+  "validation": {
+    "required": "required",
+    "minLength": "Must be more than {{count}} characters",
+    "passwordMismatch": "Passwords do not match"
+  },
+  "toast": {
+    "loginSuccess": "Signed in successfully",
+    "registerSuccess": "Please confirm your registration using the email we sent you",
+    "emailSent": "An email has been sent",
+    "profileUpdated": "Profile updated",
+    "postCreated": "Your suggestion was created and is being reviewed",
+    "reportSent": "The content was reported",
+    "passwordChanged": "Your password has been changed.",
+    "linkCopied": "Link copied",
+    "loginRequired": "Create a profile to continue"
+  },
+  "suggestions": {
+    "locationNotSet": "Location is not set yet. Suggestions are still shown.",
+    "setCologneDefault": "Set Cologne as default",
+    "pledgeLabel": "Donation pledges:",
+    "pledgeButton": "Pledge donation",
+    "createTitle": "Create a suggestion",
+    "titleLabel": "Title:",
+    "imageLabel": "Image:",
+    "reasonLabel": "Reason:",
+    "createButton": "Create",
+    "sharedTitle": "Shared suggestion"
+  },
+  "profile": {
+    "title": "Your profile",
+    "pageTitle": "Profile",
+    "nameLabel": "Name",
+    "descriptionLabel": "Description",
+    "websiteLabel": "Website",
+    "websitePlaceholder": "https://...",
+    "updateButton": "Update"
+  },
+  "comments": {
+    "title": "Comments",
+    "placeholder": "Comment"
+  },
+  "activity": {
+    "title": "Activity",
+    "notifications": "Notifications",
+    "created": "Created",
+    "marked": "Marked",
+    "supported": "Supported"
+  },
+  "report": {
+    "title": "More"
+  },
+  "voters": {
+    "upvoter": "Upvoters",
+    "downvoter": "Downvoters"
+  },
+  "pages": {
+    "supporters": "Donation pledges",
+    "share": "Share",
+    "reportAction": "Report",
+    "advancedFilter": "Advanced filters",
+    "votingFilter": "Voting filter",
+    "creationFilter": "Creation time filter",
+    "location": "Your location",
+    "map": "Location",
+    "donations": "Donations",
+    "notifications": "Notification settings",
+    "workInProgress": "This section is under construction",
+    "popularComments": "Popular comments",
+    "more": "More",
+    "linkCopied": "Link copied"
+  },
+  "cookie": {
+    "message": "This web app uses cookies.",
+    "link": "Here",
+    "suffix": "you can read the privacy policy.",
+    "accept": "I understand"
+  },
+  "share": {
+    "copyLink": "Copy link",
+    "systemShare": "More options…"
+  }
+}

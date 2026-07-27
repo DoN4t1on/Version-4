@@ -1,10 +1,11 @@
+import './i18n';
 import { createRoot } from 'react-dom/client';
 import { Link } from "react-router-dom";
 
 import './css/index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import CookieConsent from 'react-cookie-consent';
+import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { Suggestions } from './Suggestions';
 import { SuggestionsActiveNewest } from './SuggestionsActiveNewest';
 import { SuggestionsActiveMostPopular } from './SuggestionsActiveMostPopular';
@@ -96,6 +97,7 @@ import * as ReactQuery from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import Agb from './Agb';
 import Signin from './Signin';
+import UpdatePassword from './UpdatePassword';
 
 const queryClient = new ReactQuery.QueryClient();
 const app = document.getElementById('app');
@@ -206,7 +208,7 @@ createRoot(app).render(
           />
 
           <Route
-            path='antrag-activitat-unterstutzt'
+            path='/antrag-activitat-unterstutzt'
             element={<CrowdfundingActivitySupported />}
           />
 
@@ -226,6 +228,7 @@ createRoot(app).render(
 
           <Route path='/erstellzeit-filter' element={<CreationFilter />} />
           <Route path='/einloggen' element={<Signin />} />
+          <Route path='/updatepass/:email/:uniqueId' element={<UpdatePassword />} />
 
           <Route
             path='/benachrichtigungseinstellungen'
@@ -235,28 +238,8 @@ createRoot(app).render(
 
         </Routes>
       </BrowserRouter>
-      <CookieConsent
-        location='bottom'
-        disableStyles={true}
-        cookieName='myAwesomeCookieName3'
-        expires={999}
-        buttonClasses='btn btn-success btn-lg button btn-cookies'
-        containerClasses='container-cookies'
-        buttonText='Ich verstehe'
-        contentClasses='content-cookies'
-        overlay
-      >
-        Diese Web-App benutzt Cookies.{' '}
-        <a
-          href='https://app.lokalspende.org/datenschutz'
-          style={{ color: '#28a745' }}
-        
-        >
-          Hier
-        </a>{' '}
-        können Sie die Datenschutzerklärung einsehen.
-      </CookieConsent>
-      <ToastContainer limit={1} />
+      <CookieConsentBanner />
+      <ToastContainer limit={1} closeOnClick draggable />
     </ReactQuery.QueryClientProvider>
   </Provider>,
 );

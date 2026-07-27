@@ -1,29 +1,12 @@
-
-import { NavbarBottom } from "./NavbarBottom";
-import { Link } from "react-router-dom";
-
-
+import { useTranslation } from 'react-i18next';
+import { PageShell } from './components/layout/PageShell';
 
 export const Activity = () => {
-
-
-
+  const { t } = useTranslation();
 
   return (
-    <div>
-      <div className='casual-header-div'>
-        <h4 className='headline'>Aktivität</h4>
-
-
-      </div>
-      <p className="under-work-statement"> Dieser Bereich befindet sich in Arbeit </p>
-      <NavbarBottom
-        classstart='under-navitem-unselected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-selected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+    <PageShell title={t('activity.title')} showBack={false} contentClassName=''>
+      <p className='under-work-statement'>{t('pages.workInProgress')}</p>
+    </PageShell>
   );
-
-}
+};

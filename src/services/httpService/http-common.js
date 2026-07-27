@@ -7,9 +7,14 @@ const Api = axios.create({
 });
 
 Api.interceptors.request.use((config) => {
-  const localData =
-    JSON.parse(localStorage.getItem(localToken)) ||
-    JSON.parse(localStorage.getItem('localdealtoken'));
+  let localData = null;
+  try {
+    localData =
+      JSON.parse(localStorage.getItem(localToken)) ||
+      JSON.parse(localStorage.getItem('localdealtoken'));
+  } catch {
+    localData = null;
+  }
 
   const headers = { ...(config.headers || {}) };
 
@@ -29,5 +34,10 @@ Api.interceptors.request.use((config) => {
   config.headers = headers;
   return config;
 });
+
+Api.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject(error)
+);
 
 export default Api;

@@ -1,0 +1,84 @@
+{
+  "auth": {
+    "registerByEmail": {
+      "email": "apitest-user@example.com",
+      "username": "apitestuser",
+      "pass": "password123"
+    },
+    "loginByEmail": {
+      "username": "apitest-user@example.com",
+      "pass": "password123"
+    },
+    "checkemail": {
+      "username": "apitest-user@example.com"
+    },
+    "checkemailNew": {
+      "username": "brand-new-user-xyz@example.com"
+    },
+    "registerByGoogle": {
+      "credential": "invalid-google-credential-for-validation-test"
+    },
+    "registerByFb": {
+      "accessToken": "invalid-facebook-token-for-validation-test"
+    },
+    "updateuserinfo": {
+      "fname": "API Test User",
+      "location": "Köln, Germany",
+      "link": "https://example.com",
+      "desc": "Updated via integration test",
+      "lat": "50.9361189",
+      "long": "6.9564453"
+    },
+    "updatepassword": {
+      "email": "apitest-user@example.com",
+      "pass": "newpassword123",
+      "uniqueId": "REPLACE_WITH_FORGET_PASS_ID"
+    }
+  },
+  "email": {
+    "applyforgetpass": {
+      "email": "apitest-user@example.com"
+    }
+  },
+  "post": {
+    "uploadPost": {
+      "title": "Integration test suggestion",
+      "description": "Created by automated API test suite",
+      "lat": "50.9361189",
+      "long": "6.9564453"
+    },
+    "uploadComment": {
+      "commentText": "Test comment from API integration suite"
+    },
+    "uploadReply": {
+      "replyText": "Test reply from API integration suite",
+      "isIncognito": false,
+      "timeZone": "Europe/Berlin",
+      "dateTime": "2026-07-03T12:00:00.000Z"
+    },
+    "bidOnPost": {
+      "amount": 25,
+      "timeZone": "Europe/Berlin",
+      "dateTime": "2026-07-03T12:00:00.000Z"
+    },
+    "upVote": {
+      "timeZone": "Europe/Berlin",
+      "dateTime": "2026-07-03T12:00:00.000Z"
+    },
+    "downVote": {
+      "timeZone": "Europe/Berlin",
+      "dateTime": "2026-07-03T12:00:00.000Z"
+    },
+    "upVoteonComment": {
+      "timeZone": "Europe/Berlin",
+      "dateTime": "2026-07-03T12:00:00.000Z"
+    },
+    "downVoteonComment": {
+      "timeZone": "Europe/Berlin",
+      "dateTime": "2026-07-03T12:00:00.000Z"
+    },
+    "sendReport": {
+      "link": "https://app.localdonation.org/geteilter-antrag/test-post-id"
+    }
+  }
+}

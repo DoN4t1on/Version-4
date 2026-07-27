@@ -1,45 +1,30 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import SocialLogin from './SocialLogin';
-
-import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { LOGIN } from './reactStore/actions/Actions';
-import { EMPTYSOTRE } from './reactStore/actions/Actions';
-import { useLoginEmailAccount, useCreateEmailAccount } from './hooks';
-
 import { useFormik } from 'formik';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import SocialLogin from './SocialLogin';
+import { AuthModal } from './components/layout/AuthModal';
+import { AuthField } from './components/auth/AuthField';
+import { useCreateEmailAccount } from './hooks';
 
-function Signup() {
-  const [open, setOpen] = React.useState(false);
+function Signup({ open: controlledOpen, onClose, hideTrigger = false }) {
+  const { t } = useTranslation();
+  const [internalOpen, setInternalOpen] = React.useState(false);
+  const open = controlledOpen ?? internalOpen;
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setInternalOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    if (onClose) onClose();
+    setInternalOpen(false);
   };
 
-  const responseGoogle = (response) => {
-    alert('Login successful');
-  };
-
-  const dispatch = useDispatch();
-  const { mutateAsync: createEmailAccount, isLoading } =
-    useCreateEmailAccount();
-
-  let navigate = useNavigate();
+  const { mutateAsync: createEmailAccount, isLoading } = useCreateEmailAccount();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -49,23 +34,20 @@ function Signup() {
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
-        .min(4, 'Länge muss mehr als 4 Zeichen betragen')
-        .required('erforderlich'),
-
+        .min(4, t('validation.minLength', { count: 4 }))
+        .required(t('validation.required')),
       email: Yup.string()
-        .min(4, 'Länge muss mehr als 4 Zeichen betragen')
-        .required('erforderlich'),
+        .min(4, t('validation.minLength', { count: 4 }))
+        .required(t('validation.required')),
       pass: Yup.string()
-        .min(8, 'Länge muss mehr als 8 Zeichen betragen')
-        .required('erforderlich'),
+        .min(8, t('validation.minLength', { count: 8 }))
+        .required(t('validation.required')),
     }),
     onSubmit: async (values) => {
-
       const response = await createEmailAccount(values);
 
       if (response.status) {
-        let res = response.data;
-
+        handleClose();
         navigate('/');
       }
     },
@@ -73,101 +55,66 @@ function Signup() {
 
   return (
     <div>
-      <button
-        className='btn btn-success btn-lg button'
-        type='submit'
-        id='Donate'
-        onClick={handleClickOpen}
-      >
-        Registrieren
-      </button>
+      {hideTrigger ? null : (
+        <button
+          className='btn btn-success btn-lg button auth-trigger'
+          type='button'
+          onClick={handleClickOpen}
+        >
+          {t('auth.register')}
+        </button>
+      )}
 
-      <Dialog
+      <AuthModal
         open={open}
         onClose={handleClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        title={t('auth.registerTitle')}
       >
-        <DialogTitle id='alert-dialog-title'>
-          {'Login-Dienst verwenden?'}
-        </DialogTitle>
-        <DialogContent>
-          <SocialLogin />
-
-          <hr className='separator my-4' />
-          <form onSubmit={formik.handleSubmit} className='mt-4'>
-            <div className='relative w-full mb-3 '>
-              <input
-                id='username'
-                name='username'
-                type='username'
-                className='input-style1'
-                placeholder={'Name'}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.username}
-              />
-              {formik.touched.username && formik.errors.username ? (
-                <div className='error-color'>{formik.errors.username}</div>
-              ) : null}
-            </div>
-
-            <div className='relative w-full mb-3 '>
-              <input
-                id='email'
-                name='email'
-                type='email'
-                className='input-style1'
-                placeholder={'Email'}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div className='error-color'>{formik.errors.email}</div>
-              ) : null}
-            </div>
-
-            <div className='relative w-full mb-3'>
-              <input
-                name='pass'
-                id='pass'
-                type='password'
-                className='input-style1'
-                placeholder={'Password'}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.pass}
-              />
-              {formik.touched.pass && formik.errors.pass ? (
-                <div className='error-color'>{formik.errors.pass}</div>
-              ) : null}
-            </div>
-
-            <div className='my-4'>
-              {isLoading ? (
-                <CircularProgress />
-              ) : (
-                <>
-                  <button
-                    type='submit'
-                    className='btn btn-success btn-lg button btn-sign border-black'
-                  >
-                    Registrieren
-                  </button>
-                </>
-              )}
-            </div>
-          </form>
-          <div className='largediv' />
-
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='success' autoFocus>
-            Schließen
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <SocialLogin />
+        <div className='auth-modal__divider'>
+          <span>{t('auth.orContinueWithEmail')}</span>
+        </div>
+        <form onSubmit={formik.handleSubmit} className='auth-form'>
+          <AuthField
+            id='signup-username'
+            name='username'
+            label={t('auth.name')}
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.username && formik.errors.username}
+          />
+          <AuthField
+            id='signup-email'
+            name='email'
+            type='email'
+            label={t('auth.email')}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && formik.errors.email}
+          />
+          <AuthField
+            id='signup-pass'
+            name='pass'
+            type='password'
+            label={t('auth.password')}
+            value={formik.values.pass}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.pass && formik.errors.pass}
+          />
+          <div className='auth-form__actions'>
+            {isLoading ? (
+              <CircularProgress size={28} />
+            ) : (
+              <button type='submit' className='btn btn-success btn-lg button auth-form__submit'>
+                {t('auth.register')}
+              </button>
+            )}
+          </div>
+        </form>
+      </AuthModal>
     </div>
   );
 }

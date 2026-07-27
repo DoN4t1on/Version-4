@@ -18,12 +18,9 @@ const applyForgotPassword = async (req, res) => {
         email: userEmail,
       });
 
+      const websiteLink = (process.env.websiteLink || 'http://localhost:1234').replace(/\/$/, '');
       let uniquelink =
-        process.env.websiteLink +
-        'updatepass/' +
-        encodeURIComponent(userEmail) +
-        '/' +
-        passRecoed._id;
+        `${websiteLink}/updatepass/${encodeURIComponent(userEmail)}/${passRecoed._id}`;
 
       var emailParameters = {
         fname: user.fname,

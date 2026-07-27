@@ -195,16 +195,13 @@ const registerByEmail = async (req, res) => {
         email: normalizedEmail,
       });
 
+      const apiOrigin = (process.env.API_ORIGIN || `http://localhost:${process.env.PORT || 5009}`).replace(/\/$/, '');
       var emailParameters = {
         username,
         email: normalizedEmail,
 
         uniquelink:
-          process.env.websiteLink +
-          'api/email/verify/' +
-          normalizedEmail +
-          '/uniqueid/' +
-          VerifiedEmial._id,
+          `${apiOrigin}/api/email/verify/${encodeURIComponent(normalizedEmail)}/uniqueid/${VerifiedEmial._id}`,
       };
 
       let emailToSend = [
@@ -260,50 +257,42 @@ const CheckEmailOrUsername = async (req, res) => {
 
 const updateUserInfo = async (req, res) => {
   try {
-    let pic = req.files != '' ? req.files[0].filename : '';
-    const { lat, long, fname, location, link, desc } = req.body;
+    let pic = req.files?.length ? req.files[0].filename : '';
+    const { fname, location, link, desc } = req.body;
     const userId = requireObjectId(req.user.user_id, 'authenticated user');
+    const latitude = parseFloat(req.body.lat);
+    const longitude = parseFloat(req.body.long);
 
-    req.body.loc = {
-      type: 'Point',
-      coordinates: [parseFloat(req.body.long), parseFloat(req.body.lat)],
+
+
+
+
+
+
+
+
+
+    const update = {
+      link: link || '',
+      description: desc || '',
+      address: location || '',
+      fname: fname || '',
     };
 
-
-
-
-
-
-
-
-
-
-    let update;
-
     if (pic) {
-      update = {
-        link: link,
-        description: desc,
-        address: location,
-        fname: fname,
-        pic: pic,
-        loc: req.body.loc,
-      };
-    } else {
-      update = {
-        link: link,
-        description: desc,
-        address: location,
-        fname: fname,
+      update.pic = pic;
+    }
 
-        loc: req.body.loc,
+    if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+      update.loc = {
+        type: 'Point',
+        coordinates: [longitude, latitude],
       };
     }
 
-
     await User.findOneAndUpdate({ _id: userId }, update);
 
-    let updatedUser = await User.findOne({ _id: userId });
+    let updatedUser = await User.findOne({ _id: userId }).select('-pass');
 
     return res.status(200).json({ status: true, data: updatedUser });
   } catch (err) {

@@ -16,11 +16,15 @@ import { useMutation, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import Geocode from 'react-geocode';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import { AppPage } from './components/layout/AppPage';
+import { PageHeader } from './components/layout/PageHeader';
 const Input = styled('input')({
   display: 'none',
 });
 
 export const SetLocation = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -171,18 +175,8 @@ export const SetLocation = () => {
   }, [currentLat, currentLong]);
 
   return (
-    <div>
-      <div className='casual-header-div '>
-        <button className='back-button-button' onClick={() => navigate(-1)}>
-          
-          <img
-            className='back-button-icon'
-            src={require('./img/arrow-left-short.svg')}
-          />
-        </button>
-
-        <h4 className=' headline headline-with-back-button '> Ihr Standort </h4>
-      </div>
+    <AppPage>
+      <PageHeader title={t('pages.location')} />
       <div
         style={{
           position: 'fixed',
@@ -207,12 +201,7 @@ export const SetLocation = () => {
           setlocationName={setlocationName}
         />
       </div>
-      <NavbarBottom
-        classstart='under-navitem-unselected'
-        classsearch='under-navitem-unselected'
-        classactivity='under-navitem-unselected'
-        classprofile='under-navitem-unselected'
-      />
-    </div>
+      <NavbarBottom />
+    </AppPage>
   )
 }
